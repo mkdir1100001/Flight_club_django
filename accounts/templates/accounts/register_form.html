@@ -1,0 +1,22 @@
+
+  <div class="container-fluid col-md-6">
+    <form>
+        {% for field in form %}
+          {% if field.name == 'country' %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+      <div class="custom-field"></div>
+          {% else %}
+          <div class="form-group custom-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" value="{% if field.value %}{{ field.value }}{% endif %}">
+          </div>
+      {% endif %}
+        {% endfor %}
+      <div class="form-group form-check custom-field">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+        <label class="form-check-label" for="exampleCheck1">As far as my knowledge goes I am not a robot!</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>

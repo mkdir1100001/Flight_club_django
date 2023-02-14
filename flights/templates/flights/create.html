@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Adding your ticket
+{% endblock %}
+
+{% block content %}
+
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+
+
+<div class="col-md-6">
+    <div class="form-section">
+<h1 class="centered-f">Adding your ticket</h1>
+<div class="container-fluid col">
+    {% url 'flights:save_flight' as action %}
+    {% include 'flights/ticket_save_form.html' with button_text='Save' action=action %}
+</div>
+</div>
+</div>
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+<div class="little-empty-box"></div>
+{% endblock %}

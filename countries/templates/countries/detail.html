@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Country info
+{% endblock %}
+
+{% block content %}
+
+<div class="form-section">
+
+<h1 class="centered-f">Country info</h1>
+<div class="row mx-auto">
+    <div class="col-md-10 mx-auto my-4">
+        <table class=" table table-striped ">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Name</th>
+              <th scope="col">Code</th>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+            <tr>
+              <td>
+                <p>&nbsp;</p>
+              </td>
+                <td>
+                    <a href="{% url 'countries:detail' pk=object.id %}">
+                    <p>{{ object.name }}</p>
+                    </a>
+                </td>
+              <td>
+                    <p>{{ object.code }}</p>
+                </td>
+                <td>
+                    <a href="#">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </a>
+                </td>
+                <td>
+                    <form action="{% url 'countries:delete' pk=object.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}

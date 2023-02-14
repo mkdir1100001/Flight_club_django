@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create country
+{% endblock %}
+
+{% block content %}
+
+<div class="form-section">
+
+<h1 class="centered-f">Add new country to database</h1>
+<div class="container-fluid col-md-4">
+    {% include 'default_form.html' with button_text='Save' %}
+</div>
+</div>
+{% endblock %}

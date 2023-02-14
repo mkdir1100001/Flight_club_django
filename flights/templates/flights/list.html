@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ticket list
+{% endblock %}
+
+{% block content %}
+<h1 class="centered-f">Ticket list</h1>
+{% if not tickets %}
+<br>
+<br>
+<br>
+
+<h5 class="centered-f"> no tickets added to your list...</h5>
+<br>
+<br>
+{% else %}
+<div class="row mx-auto">
+    <div class="col-md-10 mx-auto my-4">
+        <table class=" table table-striped ">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date:</th>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+            {% for object in page_obj %}
+            <tr>
+              <td>
+                <p>&nbsp;</p>
+              </td>
+                <td>
+                    <p>{{ object.name }}</p>
+                </td>
+              <td>
+                    <p>{{ object.local_departure }}</p>
+                </td>
+                <td>
+                    <a href="{% url 'flights:detail' pk=object.id %}"><button type="submit" class="btn btn-primary">Check details</button></a>
+                </td>
+                <td>
+                    <a href="{{ object.deep_link }}"><button class="btn btn-success">Order now</button></a>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endif %}
+
+<div class="pagination justify-content-center">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+          {% endif %}
+          {% for page in page_obj.paginator.page_range %}
+            <li class="page-item"><a class="page-link {% if page == page_obj.number %} active {% endif %}" href="?page={{ page }}">{{ page }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+      </ul>
+    </nav>
+</div>
+
+{% for i in space_count %}
+<div class="little-empty-box"></div>
+{% endfor %}
+
+{% endblock %}

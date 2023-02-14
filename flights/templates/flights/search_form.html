@@ -1,0 +1,15 @@
+<form action="{% url 'flights:search_flight' %}" method="post" class="">{% csrf_token %}
+  {% for field in form %}
+  {% if 'country' in field.name %}
+  <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {{ field }}
+      <div class="custom-field"></div>
+  {% else %}
+  <div class="form-group custom-field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}" value="{% if field.value %}{{ field.value }}{% endif %}">
+  </div>
+  {% endif %}
+    {% endfor %}
+  <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+</form>

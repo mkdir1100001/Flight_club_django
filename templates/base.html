@@ -1,0 +1,135 @@
+{% load static %}
+
+{% url 'homepage' as home_url %}
+{% url 'flights:search_flight' as search_url %}
+{% url 'flights:search_page' as search_page_url %}
+{% url 'flights:flight_list' as flights_url %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+      integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8fk1pi2vnAZZVb/iC3vaKD0LJdWcM/sAjqm5fkljIQOAxZE2jWjKGxRVKlVyQ=="
+      crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.js"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+  <div class="container">
+    <div class="col-md-10">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+  <div class="container-fluid col-md-10">
+    <span class="navbar-brand mb-0 h1 logo-txt"><i class="fa-solid fa-plane-circle-check"></i> FLIGHT CLUB</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == home_url %}active active-button{% endif %}" aria-current="page" href="{% url 'homepage' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == search_url or request.path == search_page_url %}active active-button{% endif %}" href="{% url 'flights:search_page' %}">Search Flight Deals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == flights_url %}active active-button{% endif %}" href="{% url 'flights:flight_list' %}">MyFlights</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Database
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'countries:home' %}">Country list</a></li>
+            <li><a class="dropdown-item" href="{% url 'countries:create' %}">Add country info</a></li>
+            <li><a class="dropdown-item" href="{% url 'countries:fill_country_list' %}">Fill country list</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+           <li class="nav-item">
+          <a class="nav-link" href="#">Account</a>
+        </li>
+          <a href="{% url 'accounts:logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
+          {% else %}
+          <a href="{% url 'accounts:login' %}"><button type="button" class="btn btn-primary">Login</button></a>
+          <a href="{% url 'accounts:register' %}"><button type="button" class="btn btn-primary">Register</button></a>
+          {% endif %}
+        </li>
+        </ul>
+    </div>
+  </div>
+</nav>
+  </div>
+  </div>
+  {% if request.path != home_url %}
+  <div class="empty-box light-pink-bg"></div>
+  <style>
+    body {background-color: #ffeaf2;}
+    </style>
+  {% endif %}
+
+  <div class="container light-pink-bg">
+      <div class="row light-pink-bg">
+        <div class="col-md-8 mx-auto light-pink-bg">
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endif %}
+                  </p>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"></script>
+
+  <script>
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2();
+  });
+</script>
+
+  <div class="footer-area">
+        <p>Copyright &copy; mkdir.1100001@gmail.com 2023</p>
+  </div>
+  </body>
+
+</html>

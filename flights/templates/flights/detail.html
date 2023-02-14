@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Country info
+{% endblock %}
+
+{% block content %}
+
+<div class="form-section">
+
+<h1 class="centered-f">Country info</h1>
+<div class="row mx-auto">
+    <div class="col-md-12 mx-auto my-4">
+        <table class=" table table-striped ">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Name</th>
+              <th scope="col">From city:</th>
+              <th scope="col">To city:</th>
+              <th scope="col">Price:</th>
+              <th scope="col">Date:</th>
+              <th scope="col">Available seat count:</th>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+            <tr>
+              <td>
+                <p>&nbsp;</p>
+              </td>
+                <td>
+                    <p>{{ object.name }}</p>
+                </td>
+              <td>
+                    <p>{{ object.from_city }}</p>
+                </td>
+              <td>
+                    <p>{{ object.to_city }}</p>
+                </td>
+                <td>
+                    <p>{{ object.price }} GBP</p>
+                </td>
+                <td>
+                    <p>{{ object.local_departure }}</p>
+                </td>
+                <td>
+                    <p>{{ object.availability }}</p>
+                </td>
+                <td>
+                    <form action="{% url 'flights:delete' pk=object.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    {% if object.availability %}
+                    <a href="{{ object.deep_link }}"><button class="btn btn-success">Order now</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Country
+{% endblock %}
+
+{% block content %}
+<div class="form-section">
+    <div class="container-fluid col-md-4">
+        <h1>Edit Country info</h1>
+        {% include 'default_form.html' with button_text='Save' %}
+    </div>
+</div>
+{% endblock %}

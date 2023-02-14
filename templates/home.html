@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %} Flight club {% endblock %} {% block content %}
+<section class="hero-section pink-bg">
+  <div class="container text-center">
+    <h1>Flight Club</h1>
+    <p class="lead cite-text">The first rule of Flight Club is: You do not talk about Flight Club.</p>
+    <a href="#features" class="btn btn-primary btn-lg">Tell me more</a>
+  </div>
+</section>
+<section id="features" class="feature-section">
+  <div class="row">
+    <div class="col-md-4 featurebox">
+      <i class="fa-solid fa-plane-departure feature-icons fa-4x"></i>
+      <h3 class="feature-titles">Travel the world.</h3>
+      <p class="feature-text">Make plans and travel the world easier.</p>
+    </div>
+    <div class="col-md-4 featurebox">
+      <i class="fa-solid fa-earth-americas feature-icons fa-4x"></i>
+      <h3 class="feature-titles">World best deals.</h3>
+      <p class="feature-text">
+        Our database is collecting data from all over the world's flight companies and provides you with best travel
+        deals available.
+      </p>
+    </div>
+    <div class="col-md-4 featurebox">
+      <i class="fa-solid fa-hand-holding-dollar feature-icons fa-4x"></i>
+      <h3 class="feature-titles">Save money.</h3>
+      <p class="feature-text">Find best deals and travel while saving money.</p>
+    </div>
+  </div>
+</section>
+
+<section class="join-section">
+  <div class="d-grid gap-2 col-3 mx-auto">
+    <form action="{% url 'accounts:register' %}" method="get">
+      <button type="submit" class="btn btn-outline-danger club-button">Join free now</button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

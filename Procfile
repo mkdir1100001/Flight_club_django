@@ -1,0 +1,1 @@
+web: gunicorn flight_club.wsgi

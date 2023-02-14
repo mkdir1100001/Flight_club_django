@@ -1,0 +1,121 @@
+.hero-section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section h1 {
+  color: #fff;
+  font-size: 48px;
+  text-shadow: 1px 1px #333;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background-color: #333;
+  border-color: #333;
+}
+
+.btn-primary:hover {
+  background-color: #fff;
+  color: #333;
+  border-color: #333;
+}
+
+.pink-bg {
+  background-color: #eb0057;
+}
+
+.logo-txt {
+  color: #eb0057;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.logo-txt:hover {
+  color: #eb0057;
+}
+
+.pink-element {
+  color: #eb0057;
+}
+
+.feature-section {
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  text-align: center;
+}
+
+.feature-icons {
+  color: #eb0057;
+}
+
+.feature-text {
+  font-size: 1.1rem;
+}
+
+.cite-text {
+  font-size: 1.5rem;
+}
+
+.footer-area {
+  background-color: #372a2f;
+  color: gray;
+  padding: 2rem;
+  text-align: center;
+}
+
+.club-button {
+  background-color: #eb0057;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.club-button:hover {
+  background-color: white;
+  color: #eb0057;
+}
+
+.join-section {
+  padding-top: 0;
+  padding-bottom: 5rem;
+  text-align: center;
+}
+
+.form-section {
+  padding: 10rem;
+  padding-top: 0;
+  text-align: left;
+  background-color: #ffeaf2;
+}
+
+.custom-field {
+  padding-bottom: 20px;
+  text-align: left;
+}
+
+.centered-f {
+  text-align: center;
+}
+
+.empty-box {
+  padding-top: 100px;
+  background-color: #ffeaf2;
+}
+
+.active-button {
+  font-style: bold;
+  color: #eb0057;
+  font-size: 1.1rem;
+}
+
+.light-pink-bg {
+  background-color: #ffeaf2;
+}
+
+.little-empty-box {
+  padding-top: 25px;
+}
