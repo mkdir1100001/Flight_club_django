@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import check_password
 
 from countries.models import Country
@@ -116,7 +116,6 @@ class UserRegisterForm(forms.ModelForm):
         input_email = self.cleaned_data.get('email')
         input_password_confirm = self.cleaned_data.get('password_confirm')
         input_country = self.cleaned_data.get('country')
-
 
         if not all([input_username, input_password, input_password_confirm, input_country, input_email]):
             raise forms.ValidationError("All fields are required!")

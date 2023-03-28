@@ -1,6 +1,8 @@
 from django.urls import path
 
-from countries.views import *
+from countries.views import (CountryCreateView, CountryDeleteView,
+                             CountryDetailView, CountryListView,
+                             CountryUpdateView, fill_country_list)
 
 urlpatterns = [
     path('', CountryListView.as_view(), name='home'),

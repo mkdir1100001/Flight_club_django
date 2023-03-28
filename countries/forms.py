@@ -2,6 +2,7 @@ from django import forms
 
 from countries.models import Country
 
+
 class HtmlForm(forms.Form):
     name = forms.CharField(label='Country name')
 

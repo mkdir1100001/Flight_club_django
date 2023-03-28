@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy, reverse
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 from django.core.paginator import Paginator
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
 from countries.forms import CountryForm
 from countries.models import Country
-
 
 __all__ = (
     'home',
@@ -36,7 +36,6 @@ def home(request):
     return render(request, 'countries/home.html', context)
 
 
-
 class CountryListView(ListView):
     template_name = "countries/home.html"
     form = CountryForm()
@@ -56,7 +55,6 @@ class CountryDetailView(DetailView):
     template_name = 'countries/detail.html'
 
 
-
 class CountryCreateView(SuccessMessageMixin, CreateView):
     model = Country
     form_class = CountryForm
@@ -73,6 +71,7 @@ class CountryDeleteView(SuccessMessageMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
 
 class CountryUpdateView(SuccessMessageMixin, UpdateView):
     model = Country

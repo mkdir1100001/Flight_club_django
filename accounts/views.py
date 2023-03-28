@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 
 from accounts.forms import UserLoginForm, UserRegisterForm
 
@@ -8,6 +8,7 @@ __all__ = (
     'register_view',
     'logout_view'
 )
+
 
 def register_view(request):
     form = UserRegisterForm(request.POST or None)
@@ -27,6 +28,7 @@ def register_view(request):
 
     return render(request, 'accounts/register.html', context)
 
+
 def login_view(request):
     form = UserLoginForm(request.POST or None)
     next_page = request.GET.get('next') or '/'
@@ -43,6 +45,7 @@ def login_view(request):
 
         return redirect(next_page)
     return render(request, 'accounts/login.html', context)
+
 
 def logout_view(request):
     next_page = request.GET.get('next') or '/'

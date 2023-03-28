@@ -1,11 +1,11 @@
-import requests
 import datetime
+
 import pycountry
+import requests
 
 DEFAULT_ENDPOINT = "https://api.tequila.kiwi.com"
 API_KEY = "OQGAkG_oWDGbmlKPglIv9lxUiSmoU6HG"
-
-SEARCH_HEADER = {"apikey": API_KEY,}
+SEARCH_HEADER = {"apikey": API_KEY}
 
 
 def get_dates():
@@ -45,7 +45,6 @@ def search_flights(fly_from, fly_to, price_to, price_from, stopover_count, date1
     try:
         response = requests.get(url=search_endpoint, params=search_parameters, headers=SEARCH_HEADER)
         search_data = response.json()
-        result_list = search_data['data']
         return search_data
     except:
         return {'data': []}
@@ -79,7 +78,6 @@ def filter_results(results):
 def seconds_to_hours_minutes(seconds: int):
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
-    answer = (f"{hours} hours, {minutes} minutes")
 
     return hours, minutes
 
@@ -104,7 +102,6 @@ def search_and_filter_tickets(request, form):
     stopover_count = _search_params.get("stopover_count", 0)
     date1 = _search_params.get("date1", None)
     date2 = _search_params.get("date2", None)
-
 
     raw_result = search_flights(fly_from, fly_to, price_to, price_from, stopover_count, date1, date2)
     clean_result = filter_results(raw_result)

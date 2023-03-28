@@ -1,16 +1,15 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, DeleteView
+from django.views.generic import DeleteView, DetailView
 
-from countries.models import Country
+from flights.forms import FlightModelForm, FlightSearchForm
 from flights.models import Flight
 from flights.utils import search_and_filter_tickets
-from django.contrib import messages
 
-from flights.forms import FlightSearchForm, FlightModelForm
 
 @login_required
 def search_page(request):
@@ -35,7 +34,7 @@ def search_flight(request):
 
                 context['page_obj'] = page_obj
                 data = form.cleaned_data
-                context['countries'] = {"from" : data['from_country'], "to": data['to_country']}
+                context['countries'] = {"from": data['from_country'], "to": data['to_country']}
 
             except ValueError as e:
                 messages.error(request, e)
@@ -49,6 +48,7 @@ def search_flight(request):
         context = {'form': form}
 
     return render(request, 'flights/search_page.html', context)
+
 
 @login_required
 def add_flight(request):
@@ -82,16 +82,16 @@ def add_flight(request):
                     'id': id,
                     'price': price,
                     'travel_time': travel_time,
-                    'local_departure' : local_departure,
-                    'deep_link' : deep_link,
-                    'from_country' : from_country,
-                    'to_country' : to_country,
-                    'to_city' : to_city,
-                    'from_city' : from_city,
-                    'from_airport' : from_airport,
-                    'to_airport' : to_airport,
-                    'user_id' : user_id,
-                    'availability' : availability,
+                    'local_departure': local_departure,
+                    'deep_link': deep_link,
+                    'from_country': from_country,
+                    'to_country': to_country,
+                    'to_city': to_city,
+                    'from_city': from_city,
+                    'from_airport': from_airport,
+                    'to_airport': to_airport,
+                    'user_id': user_id,
+                    'availability': availability,
                 }
             )
             context['form'] = form
@@ -100,6 +100,7 @@ def add_flight(request):
     else:
         messages.error(request, "Can't add ticket that does not exist!")
         return redirect('/flights')
+
 
 @login_required
 def save_flight(request):
@@ -119,6 +120,7 @@ def save_flight(request):
         messages.error(request, "Can't add ticket that does not exist!")
         return redirect('/flights')
 
+
 @login_required
 def flight_list(request):
     user_tickets = Flight.objects.filter(user_id=request.user.id)
@@ -131,13 +133,12 @@ def flight_list(request):
     context['page_obj'] = page_obj
     context['space_count'] = [0 for _ in range(11 - len(context['page_obj']))]
 
-    return  render(request, 'flights/list.html', context)
+    return render(request, 'flights/list.html', context)
 
 
 class FlightDetailView(DetailView):
     queryset = Flight.objects.all()
     template_name = 'flights/detail.html'
-
 
 
 class FlightDeleteView(SuccessMessageMixin, DeleteView):

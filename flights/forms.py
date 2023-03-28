@@ -1,11 +1,9 @@
 from django import forms
-from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth import get_user_model
 from django.forms import HiddenInput
 
 from countries.models import Country
 from flights.models import Flight
-
 
 User = get_user_model()
 
@@ -73,7 +71,7 @@ class FlightSearchForm(forms.Form):
         stopover_count = self.cleaned_data.get('stopover_count')
 
         field_list = [from_country, to_country, price_from, price_to, stopover_count]
-        fields_filled = [False for field in field_list if field == None]
+        fields_filled = [False for field in field_list if field is None]
 
         if not all(fields_filled):
             raise forms.ValidationError("All fields are required!")
@@ -147,9 +145,8 @@ class FlightModelForm(forms.ModelForm):
         widget=HiddenInput()
     )
 
-
     class Meta:
         model = Flight
         fields = ['name', 'id', 'price', 'travel_time', 'availability', 'local_departure', 'deep_link',
-                  'from_country', 'to_country','to_city', 'from_city', 'from_airport', 'to_airport', 'user_id'
+                  'from_country', 'to_country', 'to_city', 'from_city', 'from_airport', 'to_airport', 'user_id'
                   ]

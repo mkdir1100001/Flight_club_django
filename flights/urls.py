@@ -1,6 +1,8 @@
 from django.urls import path
 
-from flights.views import *
+from flights.views import (FlightDeleteView, FlightDetailView, add_flight,
+                           flight_list, save_flight, search_flight,
+                           search_page)
 
 urlpatterns = [
     path('', flight_list, name='flight_list'),

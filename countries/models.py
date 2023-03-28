@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+
 from countries.utils import get_country_list
 
 
@@ -9,7 +10,6 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
-
 
     class Meta:
         verbose_name = 'Country'
