@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
@@ -11,13 +10,24 @@ from flights.models import Flight
 from flights.utils import search_and_filter_tickets
 
 
-@login_required
+def my_login_required(function):
+    def wrapper(request, *args, **kw):
+        user = request.user
+        if not user.id:
+            messages.info(request, 'Login required for this action!')
+            return redirect('/accounts/login')
+        else:
+            return function(request, *args, **kw)
+    return wrapper
+
+
+@my_login_required
 def search_page(request):
     form = FlightSearchForm()
     return render(request, 'flights/search_page.html', {'form': form})
 
 
-@login_required
+@my_login_required
 def search_flight(request):
     if request.method == 'POST':
         form = FlightSearchForm(request.POST)
@@ -50,7 +60,7 @@ def search_flight(request):
     return render(request, 'flights/search_page.html', context)
 
 
-@login_required
+@my_login_required
 def add_flight(request):
 
     if request.method == 'POST':
@@ -102,7 +112,7 @@ def add_flight(request):
         return redirect('/flights')
 
 
-@login_required
+@my_login_required
 def save_flight(request):
 
     if request.method == 'POST':
@@ -121,7 +131,7 @@ def save_flight(request):
         return redirect('/flights')
 
 
-@login_required
+@my_login_required
 def flight_list(request):
     user_tickets = Flight.objects.filter(user_id=request.user.id)
     lst = Paginator(user_tickets, 10)

@@ -4,6 +4,9 @@
 {% url 'flights:search_flight' as search_url %}
 {% url 'flights:search_page' as search_page_url %}
 {% url 'flights:flight_list' as flights_url %}
+{% url 'accounts:login' as login_url %}
+{% url 'accounts:register' as register_url %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +53,7 @@
         <li class="nav-item">
           <a class="nav-link {% if request.path == flights_url %}active active-button{% endif %}" href="{% url 'flights:flight_list' %}">MyFlights</a>
         </li>
+        {% if request.user.is_staff %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Database
@@ -60,6 +64,7 @@
             <li><a class="dropdown-item" href="{% url 'countries:fill_country_list' %}">Fill country list</a></li>
           </ul>
         </li>
+        {% endif %}
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
@@ -69,8 +74,12 @@
         </li>
           <a href="{% url 'accounts:logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
           {% else %}
-          <a href="{% url 'accounts:login' %}"><button type="button" class="btn btn-primary">Login</button></a>
-          <a href="{% url 'accounts:register' %}"><button type="button" class="btn btn-primary">Register</button></a>
+            {% if request.path != login_url %}
+              <a href="{% url 'accounts:login' %}"><button type="button" class="btn btn-primary">Login</button></a>
+            {% endif %}
+            {% if request.path != register_url %}
+              <a href="{% url 'accounts:register' %}"><button type="button" class="btn btn-primary">Register</button></a>
+            {% endif %}
           {% endif %}
         </li>
         </ul>

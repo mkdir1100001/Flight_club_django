@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.forms import UserCreationForm
 
 from countries.models import Country
 
@@ -55,7 +56,7 @@ class UserLoginForm(forms.Form):
         return final_clean
 
 
-class UserRegisterForm(forms.ModelForm):
+class UserRegisterForm(UserCreationForm):
     username = forms.CharField(
         label="Username",
         widget=forms.TextInput(
@@ -76,7 +77,7 @@ class UserRegisterForm(forms.ModelForm):
         )
     )
 
-    password = forms.CharField(
+    password1 = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(
             attrs={
@@ -86,7 +87,7 @@ class UserRegisterForm(forms.ModelForm):
         )
     )
 
-    password_confirm = forms.CharField(
+    password2 = forms.CharField(
         label="Confirm password",
         widget=forms.PasswordInput(
             attrs={
@@ -108,24 +109,34 @@ class UserRegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["username", "password", "country", "email"]
+        fields = ["username", "password1", "password2", "country", "email"]
 
-    def clean(self, *args, **kwargs):
-        input_username = self.cleaned_data.get('username')
-        input_password = self.cleaned_data.get('password')
-        input_email = self.cleaned_data.get('email')
-        input_password_confirm = self.cleaned_data.get('password_confirm')
-        input_country = self.cleaned_data.get('country')
+    def username_clean(self):
+        username = self.cleaned_data['username'].lower()
+        new = User.objects.filter(username=username)
+        if new.count():
+            raise forms.ValidationError("User Already Exist")
+        return username
 
-        if not all([input_username, input_password, input_password_confirm, input_country, input_email]):
-            raise forms.ValidationError("All fields are required!")
+    def email_clean(self):
+        email = self.cleaned_data['email'].lower()
+        new = User.objects.filter(email=email)
+        if new.count():
+            raise forms.ValidationError(" Email Already Exist")
+        return email
 
-        elif input_password != input_password_confirm:
-            raise forms.ValidationError("Both passwords must be same!")
+    def clean_password2(self):
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
 
-        else:
-            new_user = User(username=input_username, password=input_password, email=input_email, country=input_country)
-            new_user.save()
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Password don't match")
+        return password2
 
-        final_clean = super().clean(*args, **kwargs)
-        return final_clean
+    def save(self, commit=True):
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            email=self.cleaned_data['email'],
+            password=self.cleaned_data['password1']
+        )
+        return user

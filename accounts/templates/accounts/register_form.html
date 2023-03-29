@@ -1,6 +1,7 @@
 
   <div class="container-fluid col-md-6">
-    <form>
+    <form action="{% url 'accounts:register' %}" method="post">
+        {% csrf_token %}
         {% for field in form %}
           {% if field.name == 'country' %}
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>

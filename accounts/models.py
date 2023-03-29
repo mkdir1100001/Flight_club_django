@@ -4,7 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100, unique=True)
+    password = models.CharField(max_length=100)
     country = models.CharField(max_length=100, unique=False, default="United Kingdom")
 
     class Meta:
