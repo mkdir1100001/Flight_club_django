@@ -9,8 +9,8 @@ class Flight(models.Model):
     price = models.IntegerField(verbose_name="Flight price")
     travel_time = models.BigIntegerField(verbose_name="Travel time", null=True)
     availability = models.PositiveSmallIntegerField("Available seat count", null=True)
-    local_departure = models.CharField(max_length=100, verbose_name="Local departure time", null=True)
-    deep_link = models.CharField(max_length=1000)
+    local_departure = models.DateTimeField(verbose_name="Local departure time", null=True)
+    deep_link = models.CharField(max_length=3000)
 
     from_country = models.ForeignKey('countries.Country', on_delete=models.CASCADE,
                                      related_name="flight_from_country_set", verbose_name="From country",

@@ -70,6 +70,12 @@ def filter_results(results):
         ticket_data['countryTo'] = ticket.get("countryTo").get("name")
         ticket_data['countryFrom'] = ticket.get("countryFrom").get("name")
 
+        # Human readable date
+        iso_date = ticket_data['local_departure']
+        date = datetime.datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
+        readable_date = date.strftime('%B %d, %Y %I:%M %p')
+        ticket_data['local_departure_f'] = readable_date
+
         flights_found.append(ticket_data)
 
     return flights_found

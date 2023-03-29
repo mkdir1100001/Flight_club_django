@@ -71,7 +71,7 @@ class FlightSearchForm(forms.Form):
         stopover_count = self.cleaned_data.get('stopover_count')
 
         field_list = [from_country, to_country, price_from, price_to, stopover_count]
-        fields_filled = [False for field in field_list if field is None]
+        fields_filled = [True for field in field_list if not (field is None)]
 
         if not all(fields_filled):
             raise forms.ValidationError("All fields are required!")
@@ -148,5 +148,4 @@ class FlightModelForm(forms.ModelForm):
     class Meta:
         model = Flight
         fields = ['name', 'id', 'price', 'travel_time', 'availability', 'local_departure', 'deep_link',
-                  'from_country', 'to_country', 'to_city', 'from_city', 'from_airport', 'to_airport', 'user_id'
-                  ]
+                  'from_country', 'to_country', 'to_city', 'from_city', 'from_airport', 'to_airport', 'user_id']
